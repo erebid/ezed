@@ -1,0 +1,11 @@
+* ezed
+Easy EnhancedDiscord installer.
+
+Project is currently WIP, doesn't work at all (yet).
+
+** Goals
+- Have clean Code (through Shellcheck compliance and following common Bash conventions).
+- Don't use dependencies that wouldn't be found on most GNU/Linux distributions or MacOS systems (for maximum portability).
+
+** Non-goals
+- Add Windows support (EnhancedDiscord has an official installer for Windows)
