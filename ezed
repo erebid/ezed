@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+# This file is licensed under the GPLv3+. Please see COPYING for more information.
+
+die_non_empty(){
+	exit_with_help echo "ERROR: variable $1 must be defined/non-empty" >&2; exit 1;
+}
+
+die_with_help(){
+	echo "ERROR: variable $1 must be defined/non-empty" >&2; exit 1;
+}
+
+function verbose () {
+	if [[ $verbosity -eq 1 ]]; then
+		echo "$@"
+	fi
+}
+
+cmd_usage() {
+	cat << _EOF
+	you're on your own for now
+_EOF
+}
+
+cmd_version() {
+	echo "ezed v0.0.1"
+}
+
+patch() {
+	if ! grep -q 'injector' "$1"; then
+		cat >> "$1" << _EOF
+process.env.injDir = '$2';
+require(\`\${process.env.injDir}/injection.js\`);
+_EOF
+	fi
+}
+# TODO actually implement these
+# unpatch () {
+# }
+# function download_ed {
+# }
+# cmd_install() {
+# }
+
+PARAMS=""
+
+flavor=''
+directory="$HOME/.local/share/EnhancedDiscord"
+branch='master'
+verbosity=0
+
+while (( "$#" )); do
+	case "$1" in
+		-f|--flavor)
+			if [[ ${2} ]]; then flavor=$2; shift 2
+			else die_non_empty '--flavor'; fi
+			;;
+		-d|--directory)
+			if [[ ${2} ]]; then directory=$(cd "$2" && pwd); shift 2
+			else die_non_empty '--directory'; fi
+			;;
+		-b|--branch)
+			if [[ ${2} ]]; then branch=$2; shift 2
+			else die_non_empty '--branch'; fi
+			;;
+		-v|--verbose)
+			verbosity=1
+			shift
+			;;
+		--)
+			shift
+			break
+			;;
+		--*|-*=)
+		echo "Error: Unsupported flag $1" >&2
+		exit 1
+		;;
+		*)
+			PARAMS="$PARAMS $1"
+			shift
+			;;
+	esac
+done
+eval set -- "$PARAMS"
+verbose "Parsed flavor: $flavor"
+verbose "Parsed branch: $branch"
+verbose "Parsed directory: $directory"
+case "$1" in
+	help)
+		cmd_usage
+		;;
+	install|in)
+		cmd_install
+		;;
+	*)
+		cmd_usage
+		;;
+esac
+
+exit 0
