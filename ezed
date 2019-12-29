@@ -53,6 +53,7 @@ unpatch () {
 download_ed() {
 	echo "Downloading ED..."
 	curl -#Lqo /tmp/ed "https://github.com/$gh_repo/archive/$branch/$revision.tar.gz"
+	mkdir -p "$ed_dir"
 	echo "Extracting to $ed_dir..."
 	tar -xzf /tmp/ed --strip-components 1 -C "$ed_dir"
 	rm /tmp/ed
