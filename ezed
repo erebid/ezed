@@ -149,7 +149,7 @@ while (( "$#" )); do
 			else die_non_empty '--discord-directory'; fi
 			;;
 		-e|--ed-directory)
-			if [[ ${2} ]]; then ed_dir=$(mkdir "$2" && cd "$2" && pwd); shift 2
+			if [[ ${2} ]]; then mkdir -p "$2"; ed_dir=$(cd "$2" && pwd); shift 2
 			else die_non_empty '--ed-directory'; fi
 			;;
 		-g|--github-repo)
