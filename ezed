@@ -84,11 +84,27 @@ upgrade_ezed () {
 	curl -sLqo "$script_location" $script_download
 }
 
-install_ed() {
+install_ed () {
 	[[ -d "$dir" ]] || die "$dir doesn't exist."
 	download_ed
+	echo "$gh_repo:$branch" > "$ed_dir"/.ezed
 	patch
 	echo "Done!"
+}
+
+cmd_update () {
+	unpatch
+	patch
+	update_ed
+}
+
+update_ed () {
+	[[ -f "$ed_dir"/.ezed ]] || die "There is no ezed installation at $ed_dir."
+	gh_repo=$(cut -d: -f1 "$ed_dir"/.ezed)
+	branch=$(cut -d: -f2 "$ed_dir"/.ezed)
+	revision='latest'
+	echo $gh_repo $branch $revision
+	download_ed
 }
 
 uninstall_ed() {
@@ -177,7 +193,10 @@ case "$1" in
 	install|in)
 		cmd_install
 		;;
-	upgrade|up)
+	update|up)
+		cmd_update
+		;;
+	upgrade)
 		cmd_upgrade
 		;;
 	uninstall)
