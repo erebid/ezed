@@ -98,6 +98,10 @@ while (( "$#" )); do
 			if [[ ${2} ]]; then dir="$config/discord$2"; shift 2
 			else die_non_empty '--flavor'; fi
 			;;
+		-v|--version)
+			cmd_version
+			exit 0
+			;;
 		-d|--discord-directory)
 			if [[ ${2} ]]; then dir=$(cd "$2" && pwd); shift 2
 			else die_non_empty '--discord-directory'; fi
@@ -118,7 +122,7 @@ while (( "$#" )); do
 			if [[ ${2} ]]; then revision=$2; shift 2
 			else die_non_empty '--revision'; fi
 			;;
-		-v|--verbose)
+		-V|--verbose)
 			verbosity=1
 			shift
 			;;
