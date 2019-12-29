@@ -62,7 +62,7 @@ download_ed() {
 cmd_install() {
 	cat << _EOF
 This script will attempt to install EnhancedDiscord to:
-$dir
+$dir (will override any contents)
 from $gh_repo at revision $revision in branch $branch.
 _EOF
 	read -erp "Continue? [y/N] " continue
