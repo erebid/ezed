@@ -51,8 +51,8 @@ unpatch () {
 }
 
 download_ed() {
-	echo "Downloading ED from $gh_repo and branch $branch..."
-	curl -#Lqo /tmp/ed "https://github.com/$gh_repo/archive/$branch.tar.gz"
+	echo "Downloading ED..."
+	curl -#Lqo /tmp/ed "https://github.com/$gh_repo/archive/$branch/$revision.tar.gz"
 	echo "Extracting to $ed_dir..."
 	tar -xzf /tmp/ed --strip-components 1 -C "$ed_dir"
 	rm /tmp/ed
@@ -62,7 +62,7 @@ cmd_install() {
 	cat << _EOF
 This script will attempt to install EnhancedDiscord to:
 $dir
-From the latest revision of $branch at $gh_repo.
+From the revision "$revision" of $branch at $gh_repo.
 _EOF
 	read -erp "Continue? [Y/n] " continue
 	[[ "$continue" == [Yy]* ]] && echo "Proceeding" | die "Quitting"
@@ -86,6 +86,7 @@ fix_options() {
 	core="$detected_versions/modules/discord_desktop_core"
 	ed_dir=${ed_dir:-"$HOME/EnhancedDiscord"}
 	branch=${branch:-'master'}
+	revision=${revision:-'latest'}
 	verbosity=0
 }
 
@@ -105,13 +106,17 @@ while (( "$#" )); do
 			if [[ ${2} ]]; then ed_dir=$(mkdir "$2" && cd "$2" && pwd); shift 2
 			else die_non_empty '--ed-directory'; fi
 			;;
-		-r|--github-repo)
+		-g|--github-repo)
 			if [[ ${2} ]]; then gh_repo=$2; shift 2
 			else die_non_empty '--github-repo'; fi
 			;;
 		-b|--branch)
 			if [[ ${2} ]]; then branch=$2; shift 2
 			else die_non_empty '--branch'; fi
+			;;
+		-r|--revision)
+			if [[ ${2} ]]; then revision=$2; shift 2
+			else die_non_empty '--revision'; fi
 			;;
 		-v|--verbose)
 			verbosity=1
