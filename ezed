@@ -177,7 +177,7 @@ case "$1" in
 	install|in)
 		cmd_install
 		;;
-	upgrage|up)
+	upgrade|up)
 		cmd_upgrade
 		;;
 	uninstall)
