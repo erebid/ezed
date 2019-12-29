@@ -74,6 +74,16 @@ cmd_uninstall () {
 	uninstall_ed
 }
 
+cmd_upgrade () {
+	upgrade_ezed
+}
+
+upgrade_ezed () {
+	script_download="https://raw.githubusercontent.com/erebid/ezed/master/ezed"
+	script_location=$(readlink -f "${BASH_SOURCE[0]}")
+	curl -sLqo "$script_location" $script_download
+}
+
 install_ed() {
 	[[ -d "$dir" ]] || die "$dir doesn't exist."
 	download_ed
@@ -166,6 +176,9 @@ case "$1" in
 		;;
 	install|in)
 		cmd_install
+		;;
+	upgrage|up)
+		cmd_upgrade
 		;;
 	uninstall)
 		cmd_uninstall
