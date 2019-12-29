@@ -1,11 +1,23 @@
-* ezed
-Easy EnhancedDiscord installer.
+#+BEGIN_SRC
+::::::::::::::::::::::::::::::::::::::  
+:+:            :+: :+:       :+:    :+: 
++:+           +:+  +:+       +:+    +:+ 
++#++:++#     +#+   +#++:++#  +#+    +:+ 
++#+         +#+    +#+       +#+    +#+ 
+#+#        #+#     #+#       #+#    #+# 
+######################################  
+#+END_SRC
+* ezed: a simple, minimal-dependencies installer for [[https://github.com/joe27g/EnhancedDiscord][EnhancedDiscord]].
 
-Project is currently WIP, doesn't work at all (yet).
+** Progress
+- [X] Add a command to install EnhancedDiscord.
+- [X] Add a command-line flag for choosing the GitHub repository to install from (to allow installation from forks)
+- [ ] Add a command for uninstalling EnhancedDiscord
+- [ ] Add a command for updating the ezed script
 
 ** Goals
-- Have clean Code (through Shellcheck compliance and following common Bash conventions).
-- Don't use dependencies that wouldn't be found on most GNU/Linux distributions or MacOS systems (for maximum portability).
+- Have correct, readable code ([[https://github.com/koalaman/shellcheck][ShellCheck]] compliance, and following standard convention.)
+- Avoid the use of dependencies that wouldn't be found on most GNU/Linux distributions or MacOS systems (for maximum portability.)
 
 ** Non-goals
 - Add Windows support (EnhancedDiscord has an official installer for Windows)
