@@ -147,6 +147,9 @@ case "$1" in
 	install|in)
 		cmd_install
 		;;
+	version)
+		cmd_version
+		;;
 	*)
 		cmd_usage
 		;;
