@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 
+# Copyright (C) 2019 Samuel A. Hernandez <samuel.hernandez.amador@gmail.com>. All Rights Reserved.
 # This file is licensed under the GPLv3+. Please see COPYING for more information.
 
+if [[ $("uname") == "Darwin" ]]; then
+	config="$HOME/Library/'Application Support'"
+else
+	config=${XDG_CONFIG_HOME:-$HOME/.config}
+fi
+
+die(){
+	echo $1 >&2; exit;
+}
+
 die_non_empty(){
-	exit_with_help echo "ERROR: variable $1 must be defined/non-empty" >&2; exit 1;
+	die "ERROR: option $1 must be defined/non-empty"
 }
 
-die_with_help(){
-	echo "ERROR: variable $1 must be defined/non-empty" >&2; exit 1;
-}
-
-function verbose () {
+verbose() {
 	if [[ $verbosity -eq 1 ]]; then
 		echo "$@"
 	fi
@@ -18,7 +25,7 @@ function verbose () {
 
 cmd_usage() {
 	cat << _EOF
-	you're on your own for now
+you're on your own for now
 _EOF
 }
 
@@ -27,37 +34,80 @@ cmd_version() {
 }
 
 patch() {
-	if ! grep -q 'injector' "$1"; then
-		cat >> "$1" << _EOF
-process.env.injDir = '$2';
+	if ! grep -q 'injDir' "$core/"index.js; then
+		cat >> "$core"/index.js << _EOF
+
+process.env.injDir = '$ed_dir';
 require(\`\${process.env.injDir}/injection.js\`);
 _EOF
+	else
+		unpatch
+		patch
 	fi
 }
-# TODO actually implement these
-# unpatch () {
-# }
-# function download_ed {
-# }
-# cmd_install() {
-# }
+
+unpatch () {
+	sed -i -e "/injDir/d" -e "/^[[:space:]]*$/d" "$core"/index.js
+}
+
+download_ed() {
+	echo "Downloading ED from $gh_repo and branch $branch..."
+	curl -#Lqo /tmp/ed "https://github.com/$gh_repo/archive/$branch.tar.gz"
+	echo "Extracting to $ed_dir..."
+	tar -xzf /tmp/ed --strip-components 1 -C "$ed_dir"
+	rm /tmp/ed
+}
+
+cmd_install() {
+	cat << _EOF
+This script will attempt to install EnhancedDiscord to:
+$dir
+From the latest revision of $branch at $gh_repo.
+_EOF
+	read -e -p "Continue? [Y/n] " continue
+	[[ "$continue" == [Yy]* ]] && echo "Proceeding" | die "Quitting"
+	install_ed
+}
+
+install_ed() {
+	[[ -d "$dir" ]] || die "$dir doesn't exist."
+	download_ed
+	patch
+	echo "Done!"
+}
+
+fix_options() {
+	gh_repo=${gh_repo:-"joe27g/EnhancedDiscord"}
+	detected_discords=("$config"/discord*)
+	dir=${dir:-"${detected_discords[-1]}"}
+	detected_versions=$(
+		find "$dir" -maxdepth 1 -regextype sed -regex ".*/[0-9]\+.[0-9]\+.[0-9]\+" -print -quit
+			 )
+	core="$detected_versions/modules/discord_desktop_core"
+	ed_dir=${ed_dir:-"$HOME/EnhancedDiscord"}
+	branch=${branch:-'master'}
+	verbosity=0
+}
 
 PARAMS=""
-
-flavor=''
-directory="$HOME/.local/share/EnhancedDiscord"
-branch='master'
-verbosity=0
 
 while (( "$#" )); do
 	case "$1" in
 		-f|--flavor)
-			if [[ ${2} ]]; then flavor=$2; shift 2
+			if [[ ${2} ]]; then dir="$config/discord$2"; shift 2
 			else die_non_empty '--flavor'; fi
 			;;
-		-d|--directory)
-			if [[ ${2} ]]; then directory=$(cd "$2" && pwd); shift 2
-			else die_non_empty '--directory'; fi
+		-d|--discord-directory)
+			if [[ ${2} ]]; then dir=$(cd "$2" && pwd); shift 2
+			else die_non_empty '--discord-directory'; fi
+			;;
+		-e|--ed-directory)
+			if [[ ${2} ]]; then ed_dir=$(mkdir "$2" && cd "$2" && pwd); shift 2
+			else die_non_empty '--ed-directory'; fi
+			;;
+		-r|--github-repo)
+			if [[ ${2} ]]; then gh_repo=$2; shift 2
+			else die_non_empty '--github-repo'; fi
 			;;
 		-b|--branch)
 			if [[ ${2} ]]; then branch=$2; shift 2
@@ -82,9 +132,9 @@ while (( "$#" )); do
 	esac
 done
 eval set -- "$PARAMS"
-verbose "Parsed flavor: $flavor"
-verbose "Parsed branch: $branch"
-verbose "Parsed directory: $directory"
+
+fix_options
+
 case "$1" in
 	help)
 		cmd_usage
