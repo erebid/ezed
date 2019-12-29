@@ -10,7 +10,7 @@ else
 fi
 
 die(){
-	echo $1 >&2; exit;
+	echo "$1" >&2; exit;
 }
 
 die_non_empty(){
