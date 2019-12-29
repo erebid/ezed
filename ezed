@@ -70,11 +70,22 @@ _EOF
 	install_ed
 }
 
+cmd_uninstall () {
+	uninstall_ed
+}
+
 install_ed() {
 	[[ -d "$dir" ]] || die "$dir doesn't exist."
 	download_ed
 	patch
 	echo "Done!"
+}
+
+uninstall_ed() {
+	echo "Unpatching $core/index.js..."
+	unpatch
+	echo "Done!"
+	[[ ${no_remove} ]] || rm -rf $ed_dir
 }
 
 fix_options() {
@@ -127,6 +138,10 @@ while (( "$#" )); do
 			verbosity=1
 			shift
 			;;
+		--no-remove)
+			no_remove=1
+			shift
+			;;
 		--)
 			shift
 			break
@@ -151,6 +166,9 @@ case "$1" in
 		;;
 	install|in)
 		cmd_install
+		;;
+	uninstall)
+		cmd_uninstall
 		;;
 	version)
 		cmd_version
