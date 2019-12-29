@@ -20,4 +20,4 @@
 - Avoid the use of dependencies that wouldn't be found on most GNU/Linux distributions or MacOS systems (for maximum portability.)
 
 ** Non-goals
-- Add Windows support (EnhancedDiscord has an official installer for Windows)
+- Add Windows support (EnhancedDiscord has an [[https://github.com/joe27g/EnhancedDiscord#installing-the-easy-way][official installer]] for Windows)
