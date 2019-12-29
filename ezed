@@ -64,7 +64,7 @@ This script will attempt to install EnhancedDiscord to:
 $dir
 From the latest revision of $branch at $gh_repo.
 _EOF
-	read -e -p "Continue? [Y/n] " continue
+	read -erp "Continue? [Y/n] " continue
 	[[ "$continue" == [Yy]* ]] && echo "Proceeding" | die "Quitting"
 	install_ed
 }
