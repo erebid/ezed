@@ -4,10 +4,13 @@
 # This file is licensed under the GPLv3+. Please see COPYING for more information.
 
 if [[ $("uname") == "Darwin" ]]; then
+	osx=1
 	config="$HOME/Library/'Application Support'"
 else
 	config=${XDG_CONFIG_HOME:-$HOME/.config}
 fi
+
+data=${XDG_DATA_HOME:-$HOME/.local/share}
 
 die(){
 	echo "$1" >&2; exit;
@@ -122,7 +125,23 @@ uninstall_ed() {
 	[[ ${no_remove} ]] || rm -rf $ed_dir
 }
 
+locate_flatpak() {
+	flatpak_config=$(flatpak run --command=sh com.discordapp.Discord -c 'echo $XDG_CONFIG_HOME 1>&3' 3>&1)
+	flatpak_data=$(flatpak run --command=sh com.discordapp.Discord -c 'echo $XDG_DATA_HOME 1>&3' 3>&1)
+	config=${flatpak_config:-$HOME/.var/app/com.discordapp.Discord/config}
+	data=${flatpak_data:-$HOME/.var/app/com.discordapp.Discord/data}
+}
+
+locate_snap() {
+	snap_config=$(snap run --shell discord <<< 'echo "${XDG_CONFIG_HOME:-$SNAP_USER_DATA/.config}" 1>&3' 3>&1)
+	snap_data=$(snap run --shell discord <<< 'echo "${XDG_DATA_HOME:-$SNAP_USER_DATA/.local/share}" 1>&3' 3>&1)
+	config=${snap_config:-$HOME/snap/discord/current/.config}
+	data=${snap_config:-$HOME/snap/discord/current/.local/share}
+}
+
 fix_options() {
+	[[ ${flatpak} ]] && locate_flatpak
+	[[ ${snap} ]] && locate_snap
 	gh_repo=${gh_repo:-"joe27g/EnhancedDiscord"}
 	detected_discords=("$config"/discord*)
 	dir=${dir:-"${detected_discords[-1]}"}
@@ -130,7 +149,7 @@ fix_options() {
 		find "$dir" -maxdepth 1 -regextype sed -regex ".*/[0-9]\+.[0-9]\+.[0-9]\+" -print -quit
 			 )
 	core="$detected_versions/modules/discord_desktop_core"
-	ed_dir=${ed_dir:-"$HOME/EnhancedDiscord"}
+	ed_dir=${ed_dir:-"$xdg_data/EnhancedDiscord"}
 	branch=${branch:-'master'}
 	revision=${revision:-'latest'}
 	verbosity=0
@@ -182,6 +201,14 @@ while (( "$#" )); do
 			;;
 		--no-remove)
 			no_remove=1
+			shift
+			;;
+		--flatpak)
+			flatpak=1
+			shift
+			;;
+		--snap)
+			snap=1
 			shift
 			;;
 		--)
