@@ -8,13 +8,43 @@
 ######################################  
 #+END_SRC
 * ezed: a simple, minimal-dependencies installer for [[https://github.com/joe27g/EnhancedDiscord][EnhancedDiscord]].
-
-** Progress
-- [X] Add a command to install EnhancedDiscord.
-- [X] Add a command-line flag for choosing the GitHub repository to install from (to allow installation from forks)
-- [ ] Add a command for uninstalling EnhancedDiscord
-- [ ] Add a command for updating the ezed script
-
+** Installation
+#+BEGIN_SRC bash
+curl -LO https://github.com/erebid/ezed/blob/master/ezed
+# and now you can run ezed commands with ./ezed
+# optionally, move ezed to any directory in your $PATH (commonly ~/.local/share/bin, but you can use whichever directory you prefer) for execution anywhere
+mkdir -p ~/.local/share/bin
+mv ezed ~/.local/share/bin/
+#+END_SRC
+To update ED, you don't need to delete and reinstall anything manually, just run
+#+BEGIN_SRC bash
+ezed upgrade
+#+END_SRC
+** Usage Examples
+Install ED by attempting to locate the Discord install
+#+BEGIN_SRC bash
+ezed install
+#+END_SRC
+Uppdating an ED installation
+#+BEGIN_SRC bash
+ezed update -e ~/optional-path-to-ed-dir
+#+END_SRC
+Install ED to a specific flavor of Discord
+#+BEGIN_SRC bash
+ezed install -f ptb
+#+END_SRC
+Put the ED installation in a specific directory
+#+BEGIN_SRC bash
+ezed install -e ~/stuff/EnhancedDiscord
+#+END_SRC
+Uninstall an ED installation
+#+BEGIN_SRC bash
+ezed uninstall -e ~/optional-path-to-ed-dir
+#+END_SRC
+Install a fork of ED
+#+BEGIN_SRC bash
+ezed install -g "MasicoreLord/EnhancedDiscord"
+#+END_SRC
 ** Goals
 - Have correct, readable code ([[https://github.com/koalaman/shellcheck][ShellCheck]] compliance, and following standard convention.)
 - Avoid the use of dependencies that wouldn't be found on most GNU/Linux distributions or MacOS systems (for maximum portability.)
