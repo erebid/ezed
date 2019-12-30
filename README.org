@@ -10,7 +10,7 @@
 * ezed: a simple, minimal-dependencies installer for [[https://github.com/joe27g/EnhancedDiscord][EnhancedDiscord]].
 ** Installation
 #+BEGIN_SRC bash
-curl -LO https://github.com/erebid/ezed/blob/master/ezed
+curl -LO https://raw.githubusercontent.com/erebid/ezed/master/ezed
 chmod +x ./ezed
 # and now you can run ezed commands with ./ezed
 # optionally, move ezed to any directory in your $PATH (such as ~/.local/share/bin) for execution anywhere
