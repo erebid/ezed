@@ -149,7 +149,7 @@ fix_options() {
 		find "$dir" -maxdepth 1 -regextype sed -regex ".*/[0-9]\+.[0-9]\+.[0-9]\+" -print -quit
 			 )
 	core="$detected_versions/modules/discord_desktop_core"
-	ed_dir=${ed_dir:-"$xdg_data/EnhancedDiscord"}
+	ed_dir=${ed_dir:-"$data/EnhancedDiscord"}
 	branch=${branch:-'master'}
 	revision=${revision:-'latest'}
 	verbosity=0
