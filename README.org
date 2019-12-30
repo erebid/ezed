@@ -12,7 +12,7 @@
 #+BEGIN_SRC bash
 curl -LO https://github.com/erebid/ezed/blob/master/ezed
 # and now you can run ezed commands with ./ezed
-# optionally, move ezed to any directory in your $PATH (commonly ~/.local/share/bin, but you can use whichever directory you prefer) for execution anywhere
+# optionally, move ezed to any directory in your $PATH (such as ~/.local/share/bin) for execution anywhere
 mkdir -p ~/.local/share/bin
 mv ezed ~/.local/share/bin/
 #+END_SRC
