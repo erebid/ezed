@@ -160,6 +160,10 @@ while (( "$#" )); do
 			if [[ ${2} ]]; then branch=$2; shift 2
 			else die_non_empty '--branch'; fi
 			;;
+		-B|--beta)
+			branch="beta"
+			shift
+			;;
 		-r|--revision)
 			if [[ ${2} ]]; then revision=$2; shift 2
 			else die_non_empty '--revision'; fi
