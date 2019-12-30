@@ -59,6 +59,11 @@ download_ed() {
 	rm /tmp/ed
 }
 
+y_or_n() {
+	[[ "$yes" ]] && continue='y' || read -erp "Continue? [y/N] " continue
+	[[ "$continue" == [Yy]* ]] && echo "Proceeding" || die "Quitting"
+}
+
 cmd_install() {
 	cat << _EOF
 This script will attempt to install EnhancedDiscord to:
@@ -66,8 +71,7 @@ $dir
 from $gh_repo at revision $revision in branch $branch.
 The ED installation will be located at $ed_dir. (will override any contents)
 _EOF
-	read -erp "Continue? [y/N] " continue
-	[[ "$continue" == [Yy]* ]] && echo "Proceeding" || die "Quitting"
+	y_or_n
 	install_ed
 }
 
@@ -170,6 +174,10 @@ while (( "$#" )); do
 			;;
 		-V|--verbose)
 			verbosity=1
+			shift
+			;;
+		-y|--yes)
+			yes=1
 			shift
 			;;
 		--no-remove)
