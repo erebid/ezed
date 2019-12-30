@@ -47,6 +47,21 @@ Install a fork of ED
 #+BEGIN_SRC bash
 ezed install -g "MasicoreLord/EnhancedDiscord"
 #+END_SRC
+** Comparison to alternatives
+|                                                             | ezed                                | [[https://github.com/Cr3atable/LinuxED][LinuxED]]                                                                                 |
+|-------------------------------------------------------------+-------------------------------------+-----------------------------------------------------------------------------------------|
+| Prompt-based TUI                                            | ✗                                   | ✓                                                                                       |
+| Windows support                                             | ✗                                   | ✓                                                                                       |
+| MacOS support                                               | ✓                                   | ✓                                                                                       |
+| Linux support                                               | ✓                                   | ✓                                                                                       |
+| Command line interface (non-interactive)                    | ✓                                   | ✗                                                                                       |
+| Selectable branch                                           | ✓                                   | ✗                                                                                       |
+| Install EnhancedDiscord beta                                | ✓                                   | ✗                                                                                       |
+| Install EnhancedDiscord from a custom repo (such as a fork) | ✓                                   | ✗                                                                                       |
+| Install a specific revision of EnhancedDiscord              | ✓                                   | ✗                                                                                       |
+| License                                                     | GPLv3+                              | MIT                                                                                     |
+| Dependencies                                                | Some standard MacOS/Linux utilities | Brew (recommended by the developer for installing Python), Python 3, Python's distutils |
+| Code quality                                                | [[https://github.com/erebid/ezed/blob/master/ezed][Judge it yourself]]                   | [[https://github.com/Cr3atable/LinuxED/blob/master/LinuxED.py][Judge it yourself]]                                                                       |
 ** Goals
 - Have correct, readable code ([[https://github.com/koalaman/shellcheck][ShellCheck]] compliance, and following standard convention.)
 - Avoid the use of dependencies that wouldn't be found on most GNU/Linux distributions or MacOS systems (for maximum portability.)
