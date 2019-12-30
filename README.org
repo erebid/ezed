@@ -59,9 +59,11 @@ ezed install -g "MasicoreLord/EnhancedDiscord"
 | Install EnhancedDiscord beta                                | ✓                                   | ✗                                                                                       |
 | Install EnhancedDiscord from a custom repo (such as a fork) | ✓                                   | ✗                                                                                       |
 | Install a specific revision of EnhancedDiscord              | ✓                                   | ✗                                                                                       |
+| True* Flatpak/Snap support                                  | ✓                                   | ✗                                                                                       |
 | License                                                     | GPLv3+                              | MIT                                                                                     |
 | Dependencies                                                | Some standard MacOS/Linux utilities | Brew (recommended by the developer for installing Python), Python 3, Python's distutils |
 | Code quality                                                | [[https://github.com/erebid/ezed/blob/master/ezed][Judge it yourself]]                   | [[https://github.com/Cr3atable/LinuxED/blob/master/LinuxED.py][Judge it yourself]]                                                                       |
+​* = LinuxED assumes that flatpak/snap Discord installs are in [[https://github.com/Cr3atable/LinuxED/blob/master/LinuxED.py#L54-L55][preset directories]], ezed [[https://github.com/erebid/ezed/blob/master/ezed#L128-L140][makes use of Flatpak/Snap commands]] to find the correct location before falling back to a default location.
 ** Goals
 - Have correct, readable code ([[https://github.com/koalaman/shellcheck][ShellCheck]] compliance, and following standard convention.)
 - Avoid the use of dependencies that wouldn't be found on most GNU/Linux distributions or MacOS systems (for maximum portability.)
