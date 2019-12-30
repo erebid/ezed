@@ -8,6 +8,7 @@
 ######################################  
 #+END_SRC
 * ezed: a simple, minimal-dependencies installer for [[https://github.com/joe27g/EnhancedDiscord][EnhancedDiscord]].
+[[https://asciinema.org/a/wCG9SUuK0mcIts80LOFBNVHi1][https://asciinema.org/a/wCG9SUuK0mcIts80LOFBNVHi1.svg]]
 ** Installation
 #+BEGIN_SRC bash
 curl -LO https://raw.githubusercontent.com/erebid/ezed/master/ezed
