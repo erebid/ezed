@@ -114,7 +114,6 @@ update_ed () {
 	gh_repo=$(cut -d: -f1 "$ed_dir"/.ezed)
 	branch=$(cut -d: -f2 "$ed_dir"/.ezed)
 	revision='latest'
-	echo $gh_repo $branch $revision
 	download_ed
 }
 
