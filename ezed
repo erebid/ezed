@@ -136,7 +136,7 @@ locate_snap() {
 	snap_config=$(snap run --shell discord <<< 'echo "${XDG_CONFIG_HOME:-$SNAP_USER_DATA/.config}" 1>&3' 3>&1)
 	snap_data=$(snap run --shell discord <<< 'echo "${XDG_DATA_HOME:-$SNAP_USER_DATA/.local/share}" 1>&3' 3>&1)
 	config=${snap_config:-$HOME/snap/discord/current/.config}
-	data=${snap_config:-$HOME/snap/discord/current/.local/share}
+	data=${snap_data:-$HOME/snap/discord/current/.local/share}
 }
 
 fix_options() {
