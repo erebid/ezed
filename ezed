@@ -96,7 +96,7 @@ install_ed () {
 	[[ -d "$dir" ]] || die "$dir doesn't exist."
 	download_ed
 	echo "$gh_repo:$branch" > "$ed_dir"/.ezed
-	echo "{"css_loader":{"path":"./plugins/custom_style.css"}}" > "$ed_dir"/config.json
+	echo '{"css_loader":{"path":"./plugins/custom_style.css"}}' > "$ed_dir"/config.json
 	cp "$ed_dir"/plugins/style.css "$ed_dir"/plugins/custom_style.css
 	patch
 	echo "Done!"
