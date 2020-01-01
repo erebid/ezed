@@ -4,7 +4,6 @@
 # This file is licensed under the GPLv3+. Please see COPYING for more information.
 
 if [[ $("uname") == "Darwin" ]]; then
-	osx=1
 	config="$HOME/Library/'Application Support'"
 else
 	config=${XDG_CONFIG_HOME:-$HOME/.config}
