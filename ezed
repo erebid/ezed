@@ -132,14 +132,18 @@ uninstall_ed() {
 }
 
 locate_flatpak() {
+	# shellcheck disable=SC2016
 	flatpak_config=$(flatpak run --command=sh com.discordapp.Discord -c 'echo $XDG_CONFIG_HOME 1>&3' 3>&1)
+	# shellcheck disable=SC2016
 	flatpak_data=$(flatpak run --command=sh com.discordapp.Discord -c 'echo $XDG_DATA_HOME 1>&3' 3>&1)
 	config=${flatpak_config:-$HOME/.var/app/com.discordapp.Discord/config}
 	data=${flatpak_data:-$HOME/.var/app/com.discordapp.Discord/data}
 }
 
 locate_snap() {
+	# shellcheck disable=SC2016
 	snap_config=$(snap run --shell discord <<< 'echo "${XDG_CONFIG_HOME:-$SNAP_USER_DATA/.config}" 1>&3' 3>&1)
+	# shellcheck disable=SC2016
 	snap_data=$(snap run --shell discord <<< 'echo "${XDG_DATA_HOME:-$SNAP_USER_DATA/.local/share}" 1>&3' 3>&1)
 	config=${snap_config:-$HOME/snap/discord/current/.config}
 	data=${snap_data:-$HOME/snap/discord/current/.local/share}
