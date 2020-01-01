@@ -128,7 +128,7 @@ uninstall_ed() {
 	echo "Unpatching $core/index.js..."
 	unpatch
 	echo "Done!"
-	[[ ${no_remove} ]] || rm -rf $ed_dir
+	[[ ${no_remove} ]] || rm -rf "$ed_dir"
 }
 
 locate_flatpak() {
