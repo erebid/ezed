@@ -62,8 +62,16 @@ download_ed() {
 }
 
 y_or_n() {
-	[[ "$yes" ]] && continue='y' || read -erp "Continue? [y/N] " continue
-	[[ "$continue" == [Yy]* ]] && echo "Proceeding" || die "Quitting"
+	if [[ ! $yes ]]; then
+		read -erp "Continue? [y/N] " continue
+		if [[ "$continue" == [Yy]* ]]; then
+			echo "Proceeding"
+		else
+			die "Quitting"
+		fi
+	else
+		echo "--yes used, continuing."
+	fi
 }
 
 cmd_install() {
