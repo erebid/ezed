@@ -61,7 +61,7 @@ ezed install -g "MasicoreLord/EnhancedDiscord"
 | Install a specific revision of EnhancedDiscord              | ✓                                   | ✗                                                                                       |
 | Flatpak/Snap support                                        | ✓                                   | ✓*                                                                                      |
 | License                                                     | GPLv3+                              | MIT                                                                                     |
-| Dependencies                                                | Some standard MacOS/Linux utilities | Brew (recommended by the developer for installing Python), Python 3, Python's distutils |
+| Dependencies                                                | Some standard MacOS/Linux utilities | Brew (macOS only), Python 3, Python's distutils |
 | Code quality                                                | [[https://github.com/erebid/ezed/blob/master/ezed][Judge it yourself]]                   | [[https://github.com/Cr3atable/LinuxED/blob/master/LinuxED.py][Judge it yourself]]                                                                       |
 ​* = LinuxED assumes that flatpak/snap Discord installs are in [[https://github.com/Cr3atable/LinuxED/blob/master/LinuxED.py#L54-L55][preset directories]] (which works /most/ of the time), ezed [[https://github.com/erebid/ezed/blob/master/ezed#L128-L140][makes use of Flatpak/Snap commands]] to find the correct location before falling back to a default location.
 ** Goals
