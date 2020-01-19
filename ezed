@@ -4,7 +4,7 @@
 # This file is licensed under the GPLv3+. Please see COPYING for more information.
 
 if [[ $("uname") == "Darwin" ]]; then
-	config="$HOME/Library/'Application Support'"
+	config="$HOME/Library/Application Support"
 else
 	config=${XDG_CONFIG_HOME:-$HOME/.config}
 fi
@@ -36,7 +36,7 @@ cmd_version() {
 }
 
 patch() {
-	if ! grep -q 'injDir' "$core/"index.js; then
+	if ! grep -q 'injDir' "$core"/index.js; then
 		cat >> "$core"/index.js << _EOF
 
 process.env.injDir = '$ed_dir';
@@ -154,12 +154,16 @@ fix_options() {
 	[[ ${snap} ]] && locate_snap
 	gh_repo=${gh_repo:-"joe27g/EnhancedDiscord"}
 	detected_discords=("$config"/discord*)
-	dir=${dir:-"${detected_discords[-1]}"}
+	if (( ${#detected_discords[@]} )); then
+		dir=${dir:-"${detected_discords[0]}"}
+	else
+		die "Failed to Detect any discord installations in $config, manually specify one using the --discord-directory option"
+	fi
 	detected_versions=$(
-		find "$dir" -maxdepth 1 -regextype sed -regex ".*/[0-9]\+.[0-9]\+.[0-9]\+" -print -quit
-			 )
-	core="$detected_versions/modules/discord_desktop_core"
-	ed_dir=${ed_dir:-"$data/EnhancedDiscord"}
+		find "$dir" -maxdepth 1 -regex '.*/[0-9]+.[0-9]+.[0-9]+' -print -quit
+					 )
+	core="$detected_versions"/modules/discord_desktop_core
+	ed_dir=${ed_dir:-"$data"/EnhancedDiscord}
 	branch=${branch:-'master'}
 	revision=${revision:-'latest'}
 	verbosity=0
