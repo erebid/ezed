@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright (C) 2019 Samuel A. Hernandez <samuel.hernandez.amador@gmail.com>. All Rights Reserved.
+# Copyright (C) 2019-2020 Samuel A. Hernandez <sam.hernandez.amador@gmail.com>. All Rights Reserved.
 # This file is licensed under the GPLv3+. Please see COPYING for more information.
 
 if [[ $("uname") == "Darwin" ]]; then
